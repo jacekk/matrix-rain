@@ -276,6 +276,7 @@ module.exports = function (grunt) {
             server: {
                 files: {
                     '<%= config.app %>/js/main.js': [
+                        '<%= config.app %>/coffee/MatrixColumn.coffee',
                         '<%= config.app %>/coffee/MatrixRain.coffee',
                         '<%= config.app %>/coffee/init.coffee',
                     ]
@@ -284,14 +285,14 @@ module.exports = function (grunt) {
             build: {
                 files: {
                     '<%= config.build %>/MatrixRain.js': '<%= config.app %>/coffee/MatrixRain.coffee',
-                    // '<%= config.build %>/Bubbles.js': '<%= config.app %>/coffee/Bubbles.coffee',
+                    '<%= config.build %>/MatrixColumn.js': '<%= config.app %>/coffee/MatrixColumn.coffee',
                 }
             },
             min: {
                 files: {
                     '<%= config.build %>/MatrixRain.combined.js': [
                         '<%= config.app %>/coffee/MatrixRain.coffee',
-                        // '<%= config.app %>/coffee/Bubbles.coffee',
+                        '<%= config.app %>/coffee/MatrixColumn.coffee',
                     ]
                 },
             },

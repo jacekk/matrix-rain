@@ -1,3 +1,3 @@
-$(window).load ()->
-	rain = new MatrixRain()
+window.onload = ()->
+	new MatrixRain()
 	return
