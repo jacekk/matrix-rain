@@ -1,13 +1,13 @@
 class MatrixRain
 
 	cols: {
-		size: 20
-		amount: 20
+		size: 14
+		amount: 0
 		list: []
 	}
 	rows: {
-		size: 20
-		amount: 20
+		size: 18
+		amount: 0
 	}
 
 	constructor: ()->
@@ -26,7 +26,7 @@ class MatrixRain
 		return
 
 	generateColumns: ()->
-		for index in [0...@cols.amount]
+		for dummy in [0...@cols.amount] by 1
 			@cols.list.push new MatrixColumn(@)
 		return
 
