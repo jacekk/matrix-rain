@@ -31,3 +31,9 @@ body
 		display: block
 		height: 18px
 		width: 100%
+		&.rotate
+			transform: rotateZ(180deg) translateY(-4px)
+		&.flip-hor
+			transform: scaleX(-1)
+		&.flip-ver
+			transform: scaleY(-1) translateY(-4px)

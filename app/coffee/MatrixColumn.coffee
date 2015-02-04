@@ -2,6 +2,12 @@ class MatrixColumn
 
 	# -- settings
 	smooth: 5 # check stepBegin and stepEnd after any modification
+	transformations: [
+		'none'
+		'rotate'
+		'flip-hor'
+		'flip-ver'
+	]
 	# -- instance properties
 	# element: htmlElement
 	# rows: [htmlElement]
@@ -45,7 +51,16 @@ class MatrixColumn
 		@begin *= -1
 		@length = @smooth * 2
 		@length += Math.floor(Math.random() * @parent.rowsAmount)
+		# apply random transformations
+		for row in @rows
+			for trans in @transformations
+				row.classList.remove(trans)
+			row.classList.add @getRandomTransform()
 		return
+
+	getRandomTransform: ()->
+		randClass = Math.floor Math.random() * @transformations.length
+		@transformations[randClass]
 
 	step: ()->
 		@begin += 1
@@ -58,21 +73,20 @@ class MatrixColumn
 		@stepBegin()
 		@stepEnd(endPos)
 		@swapRandom()
-		@swapRandom()
 		return
 
 	stepBegin: ()->
 		for index in [@begin...@begin-@smooth]
 			if @rows[index]?
 				diff = index - @begin + @smooth
-				@rows[index].style.color = "hsl(120, 100%, #{diff*10 + 50}%)"
+				@rows[index].style.color = @formatColor diff*10 + 50
 		return
 
 	stepEnd: (endPos)->
 		for index in [endPos+@smooth...endPos]
 			if @rows[index]?
 				diff = index - endPos
-				@rows[index].style.color = "hsl(120, 50%, #{diff*10 - 5}%)"
+				@rows[index].style.color = @formatColor diff*10 - 5, 50
 		return
 
 	swapRandom: ()->
@@ -81,3 +95,6 @@ class MatrixColumn
 		if @rows[rand]?
 			@rows[rand].innerHTML = @generateRandomChar()
 		return
+
+	formatColor: (lightness, saturation = 100)->
+		"hsl(120, #{saturation}%, #{lightness}%)"

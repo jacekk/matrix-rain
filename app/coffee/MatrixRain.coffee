@@ -36,5 +36,5 @@ class MatrixRain
 		@intv = setInterval ()->
 			column.step() for column in columns
 			return
-		, 70
+		, 100
 		return
