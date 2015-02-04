@@ -1,13 +1,17 @@
 class MatrixColumn
 
-	index: 0
-	element: null
-	rows: []
+	# -- settings
+	smooth: 5 # check stepBegin and stepEnd after any modification
+	# -- instance properties
+	# element: htmlElement
+	# rows: [htmlElement]
+	# begin: int
+	# length: int
 
 	constructor: (@parent)->
-		@index = @parent.cols.list.length
 		do @createElement
 		do @generateRows
+		do @randomize
 		return
 
 	createElement: ()->
@@ -17,8 +21,9 @@ class MatrixColumn
 		return
 
 	generateRows: ()->
+		@rows = []
 		frag = document.createDocumentFragment()
-		for dummy in [0...@parent.rows.amount] by 1
+		for dummy in [0...@parent.rowsAmount]
 			row = document.createElement 'div'
 			row.classList.add 'row'
 			row.innerHTML = @generateRandomChar()
@@ -34,3 +39,45 @@ class MatrixColumn
 		rand = Math.floor(Math.random() * (charMax - charMin + 10))
 		rand += if rand < 10 then 48 else (charMin - 10)
 		String.fromCharCode rand
+
+	randomize: ()->
+		@begin = Math.ceil(Math.random() * @parent.rowsAmount * 4)
+		@begin *= -1
+		@length = @smooth * 2
+		@length += Math.floor(Math.random() * @parent.rowsAmount)
+		return
+
+	step: ()->
+		@begin += 1
+		if @begin < 0
+			return
+		endPos = @begin - @length
+		if endPos > @parent.rowsAmount
+			do @randomize
+			return
+		@stepBegin()
+		@stepEnd(endPos)
+		@swapRandom()
+		@swapRandom()
+		return
+
+	stepBegin: ()->
+		for index in [@begin...@begin-@smooth]
+			if @rows[index]?
+				diff = index - @begin + @smooth
+				@rows[index].style.color = "hsl(120, 100%, #{diff*10 + 50}%)"
+		return
+
+	stepEnd: (endPos)->
+		for index in [endPos+@smooth...endPos]
+			if @rows[index]?
+				diff = index - endPos
+				@rows[index].style.color = "hsl(120, 50%, #{diff*10 - 5}%)"
+		return
+
+	swapRandom: ()->
+		rand = Math.ceil Math.random() * @length
+		rand = @begin - rand
+		if @rows[rand]?
+			@rows[rand].innerHTML = @generateRandomChar()
+		return

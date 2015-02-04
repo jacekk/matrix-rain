@@ -1,34 +1,40 @@
 class MatrixRain
 
-	cols: {
-		size: 14
-		amount: 0
-		list: []
-	}
-	rows: {
-		size: 18
-		amount: 0
-	}
+	# -- settings
+	colSize: 14
+	rowSize: 18
+	# -- instance properties
+	# colsAmount: int
+	# rowsAmount: int
+	# columns: [MatrixColumn]
+	# intv: interval
+	# wrapper: htmlElement
 
 	constructor: ()->
 		do @setEnvParams
+		if not @wrapper?
+			console.log 'Wrapper element not found!!!'
+			return
 		do @generateColumns
 		do @initTimer
 		return
 
 	setEnvParams: ()->
 		@wrapper = document.querySelector('.page-wrapper')
-		if not @wrapper?
-			console.log 'Wrapper element not found!!!'
-			return
-		@rows.amount = Math.ceil window.innerHeight / @rows.size
-		@cols.amount = Math.floor window.innerWidth / @cols.size
+		@rowsAmount = Math.floor window.innerHeight / @rowSize
+		@colsAmount = Math.floor window.innerWidth / @colSize
 		return
 
 	generateColumns: ()->
-		for dummy in [0...@cols.amount] by 1
-			@cols.list.push new MatrixColumn(@)
+		@columns = []
+		for index in [0...@colsAmount] by 1
+			@columns.push new MatrixColumn(@)
 		return
 
 	initTimer: ()->
+		columns = @columns
+		@intv = setInterval ()->
+			column.step() for column in columns
+			return
+		, 70
 		return
