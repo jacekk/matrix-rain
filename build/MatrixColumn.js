@@ -3,7 +3,7 @@ var MatrixColumn;
 MatrixColumn = (function() {
   MatrixColumn.prototype.smooth = 5;
 
-  MatrixColumn.prototype.transformations = ['none', 'rotate', 'flip-hor', 'flip-ver'];
+  MatrixColumn.prototype.transformations = ['none', 'none', 'none', 'rotate', 'flip-hor', 'flip-ver'];
 
   function MatrixColumn(parent) {
     this.parent = parent;

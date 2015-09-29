@@ -4,6 +4,8 @@ class MatrixColumn
 	smooth: 5 # check stepBegin and stepEnd after any modification
 	transformations: [
 		'none'
+		'none'
+		'none'
 		'rotate'
 		'flip-hor'
 		'flip-ver'
