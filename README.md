@@ -1,3 +1,3 @@
 ## Matrix rain
 
-TBD
+JS implementation of matrix rain inspired by one little known movie :)
